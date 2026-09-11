@@ -950,11 +950,15 @@ CREATE TABLE collection_games (
 // src/integrations/scanner.ts
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { join } from 'path';
 
 const execAsync = promisify(exec);
 
-export async function scanDownloads(downloadsPath: string): Promise<ScanResult> {
-  const scriptPath = '/Users/tonydeverill/Documents/roms/scan_new_downloads.py';
+export async function scanDownloads(
+  downloadsPath: string,
+  scriptsDir: string
+): Promise<ScanResult> {
+  const scriptPath = join(scriptsDir, 'scan_new_downloads.py');
   const cmd = `python3 ${scriptPath} --downloads ${downloadsPath} --json`;
 
   const { stdout } = await execAsync(cmd);
@@ -963,9 +967,10 @@ export async function scanDownloads(downloadsPath: string): Promise<ScanResult> 
 
 export async function addToLibrary(
   games: string[],
-  libraryPath: string
+  libraryPath: string,
+  scriptsDir: string
 ): Promise<AddResult> {
-  const scriptPath = '/Users/tonydeverill/Documents/roms/add_gaps_to_library.py';
+  const scriptPath = join(scriptsDir, 'add_gaps_to_library.py');
   const filesArg = games.join(',');
   const cmd = `python3 ${scriptPath} --files "${filesArg}" --library ${libraryPath}`;
 

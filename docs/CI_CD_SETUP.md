@@ -202,14 +202,14 @@ Automatically creates pull requests for dependency updates:
 **npm Dependencies:**
 - **Schedule:** Weekly (Mondays at 3 AM UTC)
 - **Limit:** Maximum 5 open PRs
-- **Reviewers:** tonydeverill
-- **Assignees:** tonydeverill
+- **Reviewers:** AIntelligentTech
+- **Assignees:** AIntelligentTech
 - **Ignored:** bun (not managed by npm)
 
 **GitHub Actions:**
 - **Schedule:** Monthly (first Monday at 3 AM UTC)
 - **Limit:** Unlimited
-- **Reviewers:** tonydeverill
+- **Reviewers:** AIntelligentTech
 
 **Workflow:**
 1. Dependabot creates a PR with updated dependencies
