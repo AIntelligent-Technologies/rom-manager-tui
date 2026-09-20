@@ -1,0 +1,34 @@
+{
+  "setupRanAt": "2026-09-20",
+  "lastVerifiedAt": "2026-09-20",
+  "setupBy": "Leto (claude-code session f34dd361)",
+  "adtInstall": "not installed in this repo; ADT governs the agent, not this tree",
+  "stack": {
+    "runtime": "bun",
+    "language": "typescript",
+    "lockfile": "bun.lock",
+    "install": "bun install --frozen-lockfile",
+    "sourceRoot": "src",
+    "ui": "none — src/*.tsx contain no JSX (OpenTUI terminal app)"
+  },
+  "commands": {
+    "test": "bun test",
+    "lint": "bun run lint",
+    "typecheck": "bun run type-check",
+    "format": "bun run format:check",
+    "ci": "bun run ci"
+  },
+  "toolsVerified": {
+    "bun install --frozen-lockfile": "EXIT=0, 135 packages",
+    "bun run lint": "EXIT=2 before this change (eslintrc CommonJS under type:module)",
+    "bun run type-check": "EXIT=2 before this change (missing @types/react in tsconfig types)",
+    "bun run format:check": "EXIT=1 before this change (8 files unformatted)"
+  },
+  "gateThresholds": null,
+  "notDoneAndWhy": [
+    "Gate thresholds not derived from this codebase's baseline — this is a targeted repair of three failing CI gates on main, not an ADT onboarding.",
+    "Git hooks not installed — would change the workflow of a repository whose owner has not asked for it.",
+    "carto not exercised here — tsconfig exists, but no symbol question was asked.",
+    "A full adt-setup pass is still owed if this repository becomes actively developed."
+  ]
+}

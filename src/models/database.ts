@@ -140,7 +140,7 @@ export class DatabaseManager {
    */
   private initializeSchema(): void {
     try {
-      const statements = SCHEMA.split(';').filter(stmt => stmt.trim());
+      const statements = SCHEMA.split(';').filter((stmt) => stmt.trim());
       for (const statement of statements) {
         this.db.exec(statement);
       }
@@ -227,7 +227,7 @@ export class DatabaseManager {
         game.playcount ?? 0,
         game.crc32 || null,
         new Date().toISOString(),
-        id
+        id,
       );
 
       return id;
@@ -264,7 +264,7 @@ export class DatabaseManager {
         game.playcount ?? 0,
         game.crc32 || null,
         new Date().toISOString(),
-        new Date().toISOString()
+        new Date().toISOString(),
       );
 
       return newId;
@@ -304,40 +304,34 @@ export class DatabaseManager {
   getAllGames(): Game[] {
     const stmt = this.db.prepare('SELECT * FROM games ORDER BY title ASC');
     const rows = stmt.all() as any[];
-    return rows.map(row => this.rowToGame(row));
+    return rows.map((row) => this.rowToGame(row));
   }
 
   /**
    * Get games by system
    */
   getGamesBySystem(system: string): Game[] {
-    const stmt = this.db.prepare(
-      'SELECT * FROM games WHERE system = ? ORDER BY title ASC'
-    );
+    const stmt = this.db.prepare('SELECT * FROM games WHERE system = ? ORDER BY title ASC');
     const rows = stmt.all(system) as any[];
-    return rows.map(row => this.rowToGame(row));
+    return rows.map((row) => this.rowToGame(row));
   }
 
   /**
    * Get games by region
    */
   getGamesByRegion(region: string): Game[] {
-    const stmt = this.db.prepare(
-      'SELECT * FROM games WHERE region = ? ORDER BY title ASC'
-    );
+    const stmt = this.db.prepare('SELECT * FROM games WHERE region = ? ORDER BY title ASC');
     const rows = stmt.all(region) as any[];
-    return rows.map(row => this.rowToGame(row));
+    return rows.map((row) => this.rowToGame(row));
   }
 
   /**
    * Get favorite games
    */
   getFavorites(): Game[] {
-    const stmt = this.db.prepare(
-      'SELECT * FROM games WHERE favorite = 1 ORDER BY title ASC'
-    );
+    const stmt = this.db.prepare('SELECT * FROM games WHERE favorite = 1 ORDER BY title ASC');
     const rows = stmt.all() as any[];
-    return rows.map(row => this.rowToGame(row));
+    return rows.map((row) => this.rowToGame(row));
   }
 
   /**
@@ -345,10 +339,10 @@ export class DatabaseManager {
    */
   getInCuration(): Game[] {
     const stmt = this.db.prepare(
-      'SELECT * FROM games WHERE in_curation = 1 ORDER BY priority ASC, title ASC'
+      'SELECT * FROM games WHERE in_curation = 1 ORDER BY priority ASC, title ASC',
     );
     const rows = stmt.all() as any[];
-    return rows.map(row => this.rowToGame(row));
+    return rows.map((row) => this.rowToGame(row));
   }
 
   /**
@@ -366,7 +360,7 @@ export class DatabaseManager {
         LIMIT ?
       `);
       const rows = stmt.all(query, limit) as any[];
-      return rows.map(row => this.rowToGame(row));
+      return rows.map((row) => this.rowToGame(row));
     } catch {
       return this.searchByTitle(query, limit);
     }
@@ -384,7 +378,7 @@ export class DatabaseManager {
     `);
 
     const rows = stmt.all(`%${query}%`, limit) as any[];
-    return rows.map(row => this.rowToGame(row));
+    return rows.map((row) => this.rowToGame(row));
   }
 
   /**
@@ -393,13 +387,13 @@ export class DatabaseManager {
   getStats(): GameStats {
     // Total games and size
     const totalStmt = this.db.prepare(
-      'SELECT COUNT(*) as count, SUM(size) as total_size FROM games'
+      'SELECT COUNT(*) as count, SUM(size) as total_size FROM games',
     );
     const total = totalStmt.get() as any;
 
     // Games by system
     const systemStmt = this.db.prepare(
-      'SELECT system, COUNT(*) as count FROM games GROUP BY system'
+      'SELECT system, COUNT(*) as count FROM games GROUP BY system',
     );
     const systems = systemStmt.all() as any[];
     const gamesBySystem: Record<string, number> = {};
@@ -409,7 +403,7 @@ export class DatabaseManager {
 
     // Games by region
     const regionStmt = this.db.prepare(
-      'SELECT region, COUNT(*) as count FROM games WHERE region IS NOT NULL GROUP BY region'
+      'SELECT region, COUNT(*) as count FROM games WHERE region IS NOT NULL GROUP BY region',
     );
     const regions = regionStmt.all() as any[];
     const gamesByRegion: Record<string, number> = {};
@@ -418,20 +412,16 @@ export class DatabaseManager {
     }
 
     // Verified count
-    const verifiedStmt = this.db.prepare(
-      'SELECT COUNT(*) as count FROM games WHERE verified = 1'
-    );
+    const verifiedStmt = this.db.prepare('SELECT COUNT(*) as count FROM games WHERE verified = 1');
     const verified = verifiedStmt.get() as any;
 
     // Favorite count
-    const favoriteStmt = this.db.prepare(
-      'SELECT COUNT(*) as count FROM games WHERE favorite = 1'
-    );
+    const favoriteStmt = this.db.prepare('SELECT COUNT(*) as count FROM games WHERE favorite = 1');
     const favorite = favoriteStmt.get() as any;
 
     // In curation count
     const curationStmt = this.db.prepare(
-      'SELECT COUNT(*) as count FROM games WHERE in_curation = 1'
+      'SELECT COUNT(*) as count FROM games WHERE in_curation = 1',
     );
     const curation = curationStmt.get() as any;
 
@@ -460,12 +450,32 @@ export class DatabaseManager {
    */
   updateGame(id: string, updates: Partial<Game>): boolean {
     const allowed = [
-      'title', 'system', 'region', 'language', 'version',
-      'verified', 'badDump', 'hack', 'translation',
-      'priority', 'favorite', 'inCuration', 'onSDCard',
-      'mustHaveSeries', 'description', 'genre', 'developer',
-      'publisher', 'players', 'rating', 'coverArt',
-      'playcount', 'lastPlayed', 'crc32', 'md5', 'sha1'
+      'title',
+      'system',
+      'region',
+      'language',
+      'version',
+      'verified',
+      'badDump',
+      'hack',
+      'translation',
+      'priority',
+      'favorite',
+      'inCuration',
+      'onSDCard',
+      'mustHaveSeries',
+      'description',
+      'genre',
+      'developer',
+      'publisher',
+      'players',
+      'rating',
+      'coverArt',
+      'playcount',
+      'lastPlayed',
+      'crc32',
+      'md5',
+      'sha1',
     ];
 
     const fields: string[] = [];
@@ -499,11 +509,9 @@ export class DatabaseManager {
    * Get all systems in library
    */
   getSystems(): string[] {
-    const stmt = this.db.prepare(
-      'SELECT DISTINCT system FROM games ORDER BY system ASC'
-    );
+    const stmt = this.db.prepare('SELECT DISTINCT system FROM games ORDER BY system ASC');
     const rows = stmt.all() as any[];
-    return rows.map(row => row.system).filter(Boolean);
+    return rows.map((row) => row.system).filter(Boolean);
   }
 
   /**
@@ -511,10 +519,10 @@ export class DatabaseManager {
    */
   getRegions(): string[] {
     const stmt = this.db.prepare(
-      'SELECT DISTINCT region FROM games WHERE region IS NOT NULL ORDER BY region ASC'
+      'SELECT DISTINCT region FROM games WHERE region IS NOT NULL ORDER BY region ASC',
     );
     const rows = stmt.all() as any[];
-    return rows.map(row => row.region);
+    return rows.map((row) => row.region);
   }
 
   /**
@@ -543,9 +551,7 @@ export class DatabaseManager {
    * Get all collections
    */
   getAllCollections(): any[] {
-    const stmt = this.db.prepare(
-      'SELECT * FROM collections ORDER BY created_at DESC'
-    );
+    const stmt = this.db.prepare('SELECT * FROM collections ORDER BY created_at DESC');
     return stmt.all();
   }
 
@@ -588,7 +594,7 @@ export class DatabaseManager {
       ORDER BY g.title ASC
     `);
     const rows = stmt.all(collectionId) as any[];
-    return rows.map(row => this.rowToGame(row));
+    return rows.map((row) => this.rowToGame(row));
   }
 
   /**

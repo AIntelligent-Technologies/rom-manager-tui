@@ -19,9 +19,9 @@ export interface ScanResult {
   updated: number;
   errors: number;
   totalSize: number;
-  duration: number;  // milliseconds
+  duration: number; // milliseconds
   newGames: Game[];
-  errorFiles: Array<{ file: string; error: string }>;
+  errorFiles: { file: string; error: string }[];
 }
 
 /**
@@ -98,11 +98,7 @@ export class LibraryManager {
   /**
    * Scan a single system directory
    */
-  private async scanSystem(
-    system: string,
-    systemPath: string,
-    result: ScanResult
-  ): Promise<void> {
+  private async scanSystem(system: string, systemPath: string, result: ScanResult): Promise<void> {
     const entries = readdirSync(systemPath, { recursive: true }) as string[];
 
     for (const entry of entries) {
@@ -173,7 +169,7 @@ export class LibraryManager {
       badDump: parsed.badDump,
       hack: parsed.hack,
       translation: parsed.translation,
-      priority: 9999,  // Default priority
+      priority: 9999, // Default priority
       favorite: false,
       inCuration: false,
       onSDCard: false,
@@ -308,12 +304,7 @@ export class LibraryManager {
       `);
 
       for (const game of games) {
-        insert.run(
-          game.id,
-          game.title,
-          game.filename,
-          game.description || ''
-        );
+        insert.run(game.id, game.title, game.filename, game.description || '');
       }
     } catch (error) {
       throw new Error(`Failed to rebuild FTS index: ${error}`);
@@ -331,33 +322,45 @@ export class LibraryManager {
 
     try {
       // Check for orphaned collection_games
-      const orphaned = db.prepare(`
+      const orphaned = db
+        .prepare(
+          `
         SELECT COUNT(*) as count FROM collection_games
         WHERE game_id NOT IN (SELECT id FROM games)
         OR collection_id NOT IN (SELECT id FROM collections)
-      `).get() as any;
+      `,
+        )
+        .get() as any;
 
       if (orphaned.count > 0) {
         issues.push(`Found ${orphaned.count} orphaned collection_games entries`);
       }
 
       // Check for duplicate paths
-      const dupes = db.prepare(`
+      const dupes = db
+        .prepare(
+          `
         SELECT COUNT(*) as count FROM games
         WHERE path IN (
           SELECT path FROM games GROUP BY path HAVING COUNT(*) > 1
         )
-      `).get() as any;
+      `,
+        )
+        .get() as any;
 
       if (dupes.count > 0) {
         issues.push(`Found ${dupes.count} duplicate paths in games`);
       }
 
       // Check for missing required fields
-      const incomplete = db.prepare(`
+      const incomplete = db
+        .prepare(
+          `
         SELECT COUNT(*) as count FROM games
         WHERE title IS NULL OR system IS NULL OR path IS NULL
-      `).get() as any;
+      `,
+        )
+        .get() as any;
 
       if (incomplete.count > 0) {
         issues.push(`Found ${incomplete.count} games with missing required fields`);
@@ -382,11 +385,15 @@ export class LibraryManager {
 
     try {
       // Remove orphaned collection_games
-      const orphanedResult = db.prepare(`
+      const orphanedResult = db
+        .prepare(
+          `
         DELETE FROM collection_games
         WHERE game_id NOT IN (SELECT id FROM games)
         OR collection_id NOT IN (SELECT id FROM collections)
-      `).run();
+      `,
+        )
+        .run();
 
       if (orphanedResult.changes > 0) {
         removed += orphanedResult.changes;
@@ -394,10 +401,14 @@ export class LibraryManager {
       }
 
       // Remove games with missing required fields
-      const incompleteResult = db.prepare(`
+      const incompleteResult = db
+        .prepare(
+          `
         DELETE FROM games
         WHERE title IS NULL OR system IS NULL OR path IS NULL
-      `).run();
+      `,
+        )
+        .run();
 
       if (incompleteResult.changes > 0) {
         removed += incompleteResult.changes;
