@@ -15,7 +15,9 @@
     "format": "prettier --write src/ .github/ *.json *.md",
     "format:check": "prettier --check src/ .github/ *.json *.md",
     "type-check": "tsc --noEmit",
-    "ci": "bun run lint && bun run type-check && bun run format:check && bun run test"
+    "ci": "bun run gate:lint && bun run gate:typecheck && bun run format:check && bun run test",
+    "gate:lint": "node scripts/gate-ratchet.mjs lint",
+    "gate:typecheck": "node scripts/gate-ratchet.mjs typecheck"
   },
   "keywords": [
     "rom",

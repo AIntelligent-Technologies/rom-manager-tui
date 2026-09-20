@@ -1,0 +1,10 @@
+{
+  "lint": {
+    "errors": 226,
+    "warnings": 31
+  },
+  "typecheck": {
+    "errors": 7,
+    "warnings": 0
+  }
+}
