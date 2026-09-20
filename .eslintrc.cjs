@@ -9,8 +9,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/strict-type-checked',
     'plugin:@typescript-eslint/stylistic-type-checked',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
@@ -18,14 +16,9 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: './tsconfig.json',
-    ecmaFeatures: {
-      jsx: true,
-    },
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+  plugins: ['@typescript-eslint'],
   rules: {
-    'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'error',
     '@typescript-eslint/no-unused-vars': [
@@ -41,11 +34,6 @@ module.exports = {
         allow: ['warn', 'error'],
       },
     ],
-  },
-  settings: {
-    react: {
-      version: 'detect',
-    },
   },
   overrides: [
     {

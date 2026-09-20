@@ -31,7 +31,7 @@ export interface ParsedFilename {
   translation: boolean;
   language: string | undefined;
   extension: string;
-  cleanFilename: string;  // Filename with extension
+  cleanFilename: string; // Filename with extension
 }
 
 /**
@@ -139,7 +139,7 @@ function parseRegion(code: string): Region | undefined {
  * @returns Language code (e.g., "En", "Fr")
  */
 function parseLanguage(code: string): string | undefined {
-  const parts = code.split(',').map(p => p.trim());
+  const parts = code.split(',').map((p) => p.trim());
 
   for (const part of parts) {
     // Check for 2-letter language codes
@@ -162,7 +162,7 @@ function parseLanguage(code: string): string | undefined {
  * @returns Version string (e.g., "Rev A", "v1.1")
  */
 function parseVersion(code: string): string | undefined {
-  const parts = code.split(',').map(p => p.trim());
+  const parts = code.split(',').map((p) => p.trim());
 
   for (const part of parts) {
     // Check for revision/version patterns
@@ -200,14 +200,14 @@ export function detectSystem(filename: string): string {
     '.psx': 'PS1',
     '.ps1': 'PS1',
     '.psp': 'PSP',
-    '.iso': 'PSP',          // Could be PSP or PS1
-    '.cso': 'PSP',          // Could be PSP or PS1
+    '.iso': 'PSP', // Could be PSP or PS1
+    '.cso': 'PSP', // Could be PSP or PS1
     '.pbp': 'PSP',
     '.a26': 'Atari 2600',
     '.a78': 'Atari 7800',
-    '.7z': 'Unknown',       // Archive, need more context
-    '.zip': 'Unknown',      // Archive, need more context
-    '.chd': 'Unknown',      // Disk image, need more context
+    '.7z': 'Unknown', // Archive, need more context
+    '.zip': 'Unknown', // Archive, need more context
+    '.chd': 'Unknown', // Disk image, need more context
   };
 
   return extToSystem[ext] || 'Unknown';
@@ -221,15 +221,29 @@ export function detectSystem(filename: string): string {
  */
 export function isROMFile(filename: string): boolean {
   const romExtensions = [
-    '.gba', '.gbc', '.gb',
-    '.nes', '.sfc', '.smc',
-    '.z64', '.n64',
+    '.gba',
+    '.gbc',
+    '.gb',
+    '.nes',
+    '.sfc',
+    '.smc',
+    '.z64',
+    '.n64',
     '.nds',
-    '.md', '.gen', '.gg',
-    '.psx', '.ps1',
+    '.md',
+    '.gen',
+    '.gg',
+    '.psx',
+    '.ps1',
     '.psp',
-    '.a26', '.a78',
-    '.7z', '.zip', '.chd', '.pbp', '.iso', '.cso',
+    '.a26',
+    '.a78',
+    '.7z',
+    '.zip',
+    '.chd',
+    '.pbp',
+    '.iso',
+    '.cso',
   ];
 
   const ext = filename.toLowerCase().substring(filename.lastIndexOf('.'));
@@ -246,8 +260,8 @@ export function isROMFile(filename: string): boolean {
 export function normalizeTitle(title: string): string {
   return title
     .toLowerCase()
-    .replace(/[^\w\s]/g, '')  // Remove special characters
-    .replace(/\s+/g, ' ')     // Normalize spaces
+    .replace(/[^\w\s]/g, '') // Remove special characters
+    .replace(/\s+/g, ' ') // Normalize spaces
     .trim();
 }
 
@@ -273,10 +287,7 @@ export function compareFilenames(file1: string, file2: string): number {
   }
 
   // Calculate Levenshtein similarity as fallback
-  return levenshteinSimilarity(
-    normalizeTitle(parsed1.title),
-    normalizeTitle(parsed2.title)
-  );
+  return levenshteinSimilarity(normalizeTitle(parsed1.title), normalizeTitle(parsed2.title));
 }
 
 /**
@@ -316,7 +327,7 @@ function levenshteinDistance(str1: string, str2: string): number {
       track[j][i] = Math.min(
         track[j][i - 1] + 1,
         track[j - 1][i] + 1,
-        track[j - 1][i - 1] + indicator
+        track[j - 1][i - 1] + indicator,
       );
     }
   }

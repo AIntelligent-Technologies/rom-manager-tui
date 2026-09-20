@@ -13,21 +13,21 @@ import { parse, stringify } from 'yaml';
  */
 export interface AppConfig {
   paths: {
-    library: string;           // ROM library path
-    downloads: string;         // Downloads folder path
-    sdCard?: string;           // SD card mount point
-    spreadsheets: string;      // Path to spreadsheets
+    library: string; // ROM library path
+    downloads: string; // Downloads folder path
+    sdCard?: string; // SD card mount point
+    spreadsheets: string; // Path to spreadsheets
   };
 
   preferences: {
-    regionPriority: string[];     // Region preference order
-    autoScanDownloads: boolean;   // Auto-scan on app start
-    confirmDestructive: boolean;  // Ask before delete/clear
-    defaultCollection: string;    // Default collection name
+    regionPriority: string[]; // Region preference order
+    autoScanDownloads: boolean; // Auto-scan on app start
+    confirmDestructive: boolean; // Ask before delete/clear
+    defaultCollection: string; // Default collection name
   };
 
   mustHaveSeries: {
-    [system: string]: string[];   // Must-have series by system
+    [system: string]: string[]; // Must-have series by system
   };
 
   theme: {
@@ -41,9 +41,9 @@ export interface AppConfig {
  */
 const DEFAULT_CONFIG: AppConfig = {
   paths: {
-    library: '/Volumes/Tony\'s T5/Roms/1G1R_Library',
+    library: "/Volumes/Tony's T5/Roms/1G1R_Library",
     downloads: join(homedir(), 'Downloads'),
-    spreadsheets: '/Volumes/Tony\'s T5/Roms',
+    spreadsheets: "/Volumes/Tony's T5/Roms",
   },
   preferences: {
     regionPriority: ['USA', 'World', 'Europe', 'Japan'],
@@ -52,10 +52,10 @@ const DEFAULT_CONFIG: AppConfig = {
     defaultCollection: '128GB Favorites',
   },
   mustHaveSeries: {
-    'GBA': ['Pokemon', 'Zelda', 'Kirby', 'Mario', 'Fire Emblem'],
-    'PS1': ['Final Fantasy', 'Metal Gear Solid', 'Tekken', 'Gran Turismo'],
-    'N64': ['Mario', 'Zelda', 'Donkey Kong', 'Mario Kart'],
-    'SNES': ['Mario', 'Zelda', 'Donkey Kong', 'Kirby', 'Mega Man X'],
+    GBA: ['Pokemon', 'Zelda', 'Kirby', 'Mario', 'Fire Emblem'],
+    PS1: ['Final Fantasy', 'Metal Gear Solid', 'Tekken', 'Gran Turismo'],
+    N64: ['Mario', 'Zelda', 'Donkey Kong', 'Mario Kart'],
+    SNES: ['Mario', 'Zelda', 'Donkey Kong', 'Kirby', 'Mega Man X'],
   },
 
   theme: {
@@ -231,20 +231,14 @@ export class ConfigManager {
    * Get region priority order
    */
   getRegionPriority(): string[] {
-    return this.get(
-      'preferences.regionPriority',
-      DEFAULT_CONFIG.preferences.regionPriority
-    );
+    return this.get('preferences.regionPriority', DEFAULT_CONFIG.preferences.regionPriority);
   }
 
   /**
    * Get must-have series for a system
    */
   getMustHaveSeries(system: string): string[] {
-    const allSeries = this.get(
-      'mustHaveSeries',
-      DEFAULT_CONFIG.mustHaveSeries
-    );
+    const allSeries = this.get('mustHaveSeries', DEFAULT_CONFIG.mustHaveSeries);
     return allSeries[system] || [];
   }
 
@@ -277,7 +271,7 @@ export class ConfigManager {
   shouldConfirmDestructive(): boolean {
     return this.get(
       'preferences.confirmDestructive',
-      DEFAULT_CONFIG.preferences.confirmDestructive
+      DEFAULT_CONFIG.preferences.confirmDestructive,
     );
   }
 
@@ -285,10 +279,7 @@ export class ConfigManager {
    * Check if should auto-scan downloads
    */
   shouldAutoScanDownloads(): boolean {
-    return this.get(
-      'preferences.autoScanDownloads',
-      DEFAULT_CONFIG.preferences.autoScanDownloads
-    );
+    return this.get('preferences.autoScanDownloads', DEFAULT_CONFIG.preferences.autoScanDownloads);
   }
 
   /**

@@ -23,8 +23,7 @@ function formatSize(bytes: number): string {
  */
 function renderDashboard(stats: GameStats, config: ConfigManager): void {
   const systemCount = Object.keys(stats.gamesBySystem).length;
-  const systemEntries = Object.entries(stats.gamesBySystem)
-    .sort(([, a], [, b]) => b - a);
+  const systemEntries = Object.entries(stats.gamesBySystem).sort(([, a], [, b]) => b - a);
 
   // Clear screen and hide cursor
   process.stdout.write('\x1b[2J\x1b[H\x1b[?25l');
@@ -33,20 +32,26 @@ function renderDashboard(stats: GameStats, config: ConfigManager): void {
 
   // Header
   lines.push('\x1b[1;36m┌─ ROM Manager TUI v1.0.0 ─────────────────────────────────────┐\x1b[0m');
-  lines.push(`\x1b[36m│\x1b[0m  Library: \x1b[1;37m${stats.totalGames}\x1b[0m games | \x1b[1;37m${systemCount}\x1b[0m systems | \x1b[1;37m${formatSize(stats.totalSize)}\x1b[0m`);
+  lines.push(
+    `\x1b[36m│\x1b[0m  Library: \x1b[1;37m${stats.totalGames}\x1b[0m games | \x1b[1;37m${systemCount}\x1b[0m systems | \x1b[1;37m${formatSize(stats.totalSize)}\x1b[0m`,
+  );
   lines.push('\x1b[36m├───────────────────────────────────────────────────────────────┤\x1b[0m');
   lines.push('');
 
   // Empty state onboarding
   if (stats.totalGames === 0) {
     lines.push('\x1b[1;33m  🚀 Getting Started\x1b[0m');
-    lines.push('    Your library is empty. Here\'s how to get started:');
+    lines.push("    Your library is empty. Here's how to get started:");
     lines.push('');
-    lines.push('    \x1b[1;37m1.\x1b[0m Press \x1b[1;37m[D]\x1b[0m to scan your Downloads folder for ROMs');
+    lines.push(
+      '    \x1b[1;37m1.\x1b[0m Press \x1b[1;37m[D]\x1b[0m to scan your Downloads folder for ROMs',
+    );
     lines.push('    \x1b[1;37m2.\x1b[0m Or manually add ROM files to your library directory:');
     lines.push(`       \x1b[36m${config.getLibraryPath()}\x1b[0m`);
     lines.push('');
-    lines.push('    \x1b[90m💡 Tip: Supported formats include .zip, .7z, .rar, and individual ROM files\x1b[0m');
+    lines.push(
+      '    \x1b[90m💡 Tip: Supported formats include .zip, .7z, .rar, and individual ROM files\x1b[0m',
+    );
     lines.push('');
   } else {
     // Quick Stats
@@ -79,7 +84,9 @@ function renderDashboard(stats: GameStats, config: ConfigManager): void {
   // Region breakdown
   if (Object.keys(stats.gamesByRegion).length > 0) {
     lines.push('\x1b[1;33m  Regions\x1b[0m');
-    for (const [region, count] of Object.entries(stats.gamesByRegion).sort(([, a], [, b]) => b - a)) {
+    for (const [region, count] of Object.entries(stats.gamesByRegion).sort(
+      ([, a], [, b]) => b - a,
+    )) {
       const pct = ((count / stats.totalGames) * 100).toFixed(1);
       lines.push(`    ${(region || 'Unknown').padEnd(12)} ${count} (${pct}%)`);
     }
@@ -88,7 +95,9 @@ function renderDashboard(stats: GameStats, config: ConfigManager): void {
 
   // Footer
   lines.push('\x1b[36m├───────────────────────────────────────────────────────────────┤\x1b[0m');
-  lines.push('\x1b[36m│\x1b[0m \x1b[1;37m[L]\x1b[0mibrary \x1b[1;37m[D]\x1b[0mownloads \x1b[1;37m[C]\x1b[0muration \x1b[1;37m[S]\x1b[0mD Card \x1b[1;37m[/]\x1b[0mSearch \x1b[1;37m[q]\x1b[0mQuit');
+  lines.push(
+    '\x1b[36m│\x1b[0m \x1b[1;37m[L]\x1b[0mibrary \x1b[1;37m[D]\x1b[0mownloads \x1b[1;37m[C]\x1b[0muration \x1b[1;37m[S]\x1b[0mD Card \x1b[1;37m[/]\x1b[0mSearch \x1b[1;37m[q]\x1b[0mQuit',
+  );
   lines.push('\x1b[1;36m└───────────────────────────────────────────────────────────────┘\x1b[0m');
 
   process.stdout.write(lines.join('\n') + '\n');
@@ -119,7 +128,9 @@ function setupKeyboard(db: DatabaseManager, config: ConfigManager, library: Libr
         // Library Browser
         const systems = db.getSystems();
         process.stdout.write('\x1b[2J\x1b[H');
-        console.log('\x1b[1;36m┌─ Library Browser ─────────────────────────────────────────────┐\x1b[0m');
+        console.log(
+          '\x1b[1;36m┌─ Library Browser ─────────────────────────────────────────────┐\x1b[0m',
+        );
         console.log('');
         for (const system of systems) {
           const games = db.getGamesBySystem(system);
@@ -134,7 +145,9 @@ function setupKeyboard(db: DatabaseManager, config: ConfigManager, library: Libr
           }
           console.log('');
         }
-        console.log('\x1b[36m└───────────────────────────────────────────────────────────────┘\x1b[0m');
+        console.log(
+          '\x1b[36m└───────────────────────────────────────────────────────────────┘\x1b[0m',
+        );
         console.log('\nPress [h] to go home, [q] to quit');
         break;
       }
@@ -142,10 +155,14 @@ function setupKeyboard(db: DatabaseManager, config: ConfigManager, library: Libr
       case '/': {
         // Search
         process.stdout.write('\x1b[2J\x1b[H');
-        console.log('\x1b[1;36m┌─ Search ──────────────────────────────────────────────────────┐\x1b[0m');
+        console.log(
+          '\x1b[1;36m┌─ Search ──────────────────────────────────────────────────────┐\x1b[0m',
+        );
         console.log('  Type a search query and press Enter.');
         console.log('  Press [Esc] to cancel.');
-        console.log('\x1b[36m└───────────────────────────────────────────────────────────────┘\x1b[0m');
+        console.log(
+          '\x1b[36m└───────────────────────────────────────────────────────────────┘\x1b[0m',
+        );
         // TODO: implement interactive search input
         console.log('\nPress [h] to go home');
         break;
@@ -162,7 +179,9 @@ function setupKeyboard(db: DatabaseManager, config: ConfigManager, library: Libr
       case '?': {
         // Help
         process.stdout.write('\x1b[2J\x1b[H');
-        console.log('\x1b[1;36m┌─ Keyboard Shortcuts ─────────────────────────────────────────┐\x1b[0m');
+        console.log(
+          '\x1b[1;36m┌─ Keyboard Shortcuts ─────────────────────────────────────────┐\x1b[0m',
+        );
         console.log('');
         console.log('  \x1b[1;33mNavigation\x1b[0m');
         console.log('    \x1b[1;37mh\x1b[0m         Home (Dashboard)');
@@ -177,7 +196,9 @@ function setupKeyboard(db: DatabaseManager, config: ConfigManager, library: Libr
         console.log('    \x1b[1;37mq\x1b[0m         Quit');
         console.log('    \x1b[1;37mCtrl+C\x1b[0m    Force quit');
         console.log('');
-        console.log('\x1b[36m└───────────────────────────────────────────────────────────────┘\x1b[0m');
+        console.log(
+          '\x1b[36m└───────────────────────────────────────────────────────────────┘\x1b[0m',
+        );
         console.log('\nPress [h] to go home');
         break;
       }
@@ -207,7 +228,7 @@ export async function startApp(): Promise<void> {
     const library = new LibraryManager(db, config);
 
     // Debounce to prevent multiple renders during terminal setup
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 50));
 
     // Get initial stats
     const stats = db.getStats();
@@ -226,7 +247,10 @@ export async function startApp(): Promise<void> {
     });
   } catch (error) {
     process.stdout.write('\x1b[2J\x1b[H\x1b[?25h'); // Clear and show cursor
-    console.error('\x1b[1;31mError starting ROM Manager:\x1b[0m', error instanceof Error ? error.message : error);
+    console.error(
+      '\x1b[1;31mError starting ROM Manager:\x1b[0m',
+      error instanceof Error ? error.message : error,
+    );
     process.exit(1);
   }
 }

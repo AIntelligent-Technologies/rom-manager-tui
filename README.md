@@ -122,18 +122,18 @@ Insert SD card → Press [S] → [f] to flash
 
 ### Keyboard Shortcuts
 
-| Shortcut | Action | Shortcut | Action |
-|----------|--------|----------|--------|
-| `/` | Search games | `?` | Help overlay |
-| `j`/`k` | Up/down | `h`/`l` | Previous/next |
-| `g`/`G` | Top/bottom | `Ctrl+d/u` | Page down/up |
-| `Space` | Toggle select | `Enter` | Select/confirm |
-| `L` | Library Browser | `D` | Downloads Manager |
-| `C` | Curation Studio | `S` | SD Card Manager |
-| `M` | Metadata Editor | `,` | Settings |
-| `e` | Edit | `f` | Toggle favorite |
-| `d` | Delete | `:` | Command mode |
-| `q`/`Esc` | Back/cancel | `Ctrl+C` | Quit |
+| Shortcut  | Action          | Shortcut   | Action            |
+| --------- | --------------- | ---------- | ----------------- |
+| `/`       | Search games    | `?`        | Help overlay      |
+| `j`/`k`   | Up/down         | `h`/`l`    | Previous/next     |
+| `g`/`G`   | Top/bottom      | `Ctrl+d/u` | Page down/up      |
+| `Space`   | Toggle select   | `Enter`    | Select/confirm    |
+| `L`       | Library Browser | `D`        | Downloads Manager |
+| `C`       | Curation Studio | `S`        | SD Card Manager   |
+| `M`       | Metadata Editor | `,`        | Settings          |
+| `e`       | Edit            | `f`        | Toggle favorite   |
+| `d`       | Delete          | `:`        | Command mode      |
+| `q`/`Esc` | Back/cancel     | `Ctrl+C`   | Quit              |
 
 See [USER_GUIDE.md](docs/USER_GUIDE.md) for complete documentation.
 
@@ -220,12 +220,12 @@ See [DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) for detailed development infor
 
 ## Supported Platforms
 
-| Platform | Status | Notes |
-|----------|--------|-------|
-| **Linux** | ✅ Full Support | Recommended for maximum compatibility |
-| **macOS** | ✅ Full Support | Both Apple Silicon and Intel |
+| Platform        | Status          | Notes                                   |
+| --------------- | --------------- | --------------------------------------- |
+| **Linux**       | ✅ Full Support | Recommended for maximum compatibility   |
+| **macOS**       | ✅ Full Support | Both Apple Silicon and Intel            |
 | **Windows WSL** | ✅ Full Support | Native Windows has terminal limitations |
-| **Windows** | ⚠️ Limited | Use WSL for full OpenTUI features |
+| **Windows**     | ⚠️ Limited      | Use WSL for full OpenTUI features       |
 
 ## Configuration
 
@@ -259,6 +259,7 @@ See [API.md](docs/API.md) for full configuration options.
 ### Linux & macOS
 
 Full support for all features:
+
 - 7,300+ game rendering smooth
 - SD card detection and flashing
 - Save state backup/restore
@@ -279,6 +280,7 @@ Avoid native Windows CMD/PowerShell due to OpenTUI terminal limitations.
 ### "Command not found: bun"
 
 Install Bun:
+
 ```bash
 curl -fsSL https://bun.sh/install | bash
 ```
@@ -286,6 +288,7 @@ curl -fsSL https://bun.sh/install | bash
 ### "Terminal not ANSI-compatible"
 
 Set terminal type:
+
 ```bash
 export TERM=xterm-256color
 bun run start
@@ -294,6 +297,7 @@ bun run start
 ### "Cannot find Python scripts"
 
 Configure script paths in `config.yaml`:
+
 ```yaml
 paths:
   pythonScripts: /path/to/scripts
@@ -302,6 +306,7 @@ paths:
 ### Performance Issues with Large Libraries
 
 Rebuild index:
+
 ```bash
 bun run rebuild-index
 ```
@@ -311,6 +316,7 @@ See [USER_GUIDE.md#Troubleshooting](docs/USER_GUIDE.md#troubleshooting) for more
 ## Contributing
 
 We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for:
+
 - Code style guidelines
 - Development workflow
 - Pull request process
@@ -331,6 +337,7 @@ See [LICENSE](LICENSE) for details.
 ## Version
 
 **Current Release**: 1.0.0
+
 - Complete implementation of all core features
 - Full documentation and testing
 - Production-ready for large ROM collections
@@ -347,6 +354,7 @@ See [LICENSE](LICENSE) for details.
 ## Acknowledgments
 
 Inspired by:
+
 - **lazygit** - Keyboard-driven panels and batch operations
 - **ranger** - File manager UX adapted for ROM collections
 - **fzf** - Fuzzy search paradigms
