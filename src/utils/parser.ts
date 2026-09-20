@@ -70,7 +70,7 @@ export function parseFilename(filename: string): ParsedFilename {
   };
 
   // Extract extension
-  const extMatch = filename.match(/\.([a-zA-Z0-9]+)$/);
+  const extMatch = /\.([a-zA-Z0-9]+)$/.exec(filename);
   if (extMatch) {
     result.extension = extMatch[0];
   }
@@ -97,7 +97,7 @@ export function parseFilename(filename: string): ParsedFilename {
   }
 
   // Parse region and other metadata in parentheses
-  const regionMatch = base.match(/\(([^)]*)\)/);
+  const regionMatch = /\(([^)]*)\)/.exec(base);
   if (regionMatch) {
     const regionStr = regionMatch[1].trim();
     result.region = parseRegion(regionStr);

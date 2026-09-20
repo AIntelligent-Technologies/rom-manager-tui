@@ -21,7 +21,7 @@ export interface ScanResult {
   totalSize: number;
   duration: number; // milliseconds
   newGames: Game[];
-  errorFiles: Array<{ file: string; error: string }>;
+  errorFiles: { file: string; error: string }[];
 }
 
 /**
