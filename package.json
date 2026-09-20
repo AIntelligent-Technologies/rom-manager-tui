@@ -33,6 +33,7 @@
     "yaml": "^2.4.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/bun": "latest",
     "@types/node": "^20.10.0",
     "@typescript-eslint/eslint-plugin": "8",

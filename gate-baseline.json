@@ -1,10 +1,12 @@
 {
   "lint": {
-    "errors": 226,
-    "warnings": 31
+    "errors": 230,
+    "warnings": 31,
+    "suppressions": 0
   },
   "typecheck": {
     "errors": 7,
-    "warnings": 0
+    "warnings": 0,
+    "suppressions": 0
   }
 }
