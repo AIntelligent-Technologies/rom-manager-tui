@@ -1,0 +1,9 @@
+{
+  "name": "leto-rmt-green",
+  "mode": "snapshot",
+  "source": "/workspaces/repos/rom-manager-tui",
+  "branch": "fix/2026-09-20-restore-green-main",
+  "base": "c949651",
+  "created": "2026-09-20T23:26:04+01:00",
+  "created_ms": 291
+}
