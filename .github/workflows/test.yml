@@ -9,9 +9,9 @@ on:
 jobs:
   test:
     name: Test on ${{ matrix.os }}
-    # The macOS leg runs on GitHub-hosted macos-latest on purpose: this repository is public, so that runner is
-    # free, and Blacksmith's macOS runner is $0.08 a minute (decision 2026-10-02, Athena, to cut the Blacksmith bill).
-    runs-on: ${{ matrix.os == 'ubuntu-latest' && 'blacksmith-2vcpu-ubuntu-2404' || matrix.os }}
+    # GitHub-hosted on purpose: this repository is public, so these runners are free, and Blacksmith's are billed
+    # ($0.004 a minute for Linux, $0.08 for macOS; decision 2026-10-02, Athena, within Tony's word to cut the Blacksmith bill).
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
       matrix:
