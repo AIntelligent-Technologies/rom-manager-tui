@@ -9,7 +9,8 @@ on:
 jobs:
   test:
     name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os == 'ubuntu-latest' && 'blacksmith-2vcpu-ubuntu-2404' || matrix.os }}
+    runs-on: ${{ matrix.os == 'ubuntu-latest' && 'blacksmith-2vcpu-ubuntu-2404' || matrix.os == 'macos-latest' && 'blacksmith-6vcpu-macos-latest' || matrix.os }}
+    timeout-minutes: 10
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
